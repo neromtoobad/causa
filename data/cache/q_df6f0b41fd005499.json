@@ -1,0 +1,24 @@
+{
+ "sql": "SELECT 'price_complaint' AS category, month, city, SUM(tickets) AS tickets FROM kola.helpdesk WHERE city='Accra' AND month IN ('2026-05','2026-07') GROUP BY month, city ORDER BY month, category",
+ "columns": [
+  "category",
+  "month",
+  "city",
+  "tickets"
+ ],
+ "rows": [
+  [
+   "price_complaint",
+   "2026-05",
+   "Accra",
+   "30"
+  ],
+  [
+   "price_complaint",
+   "2026-07",
+   "Accra",
+   "40"
+  ]
+ ],
+ "recordedAt": "2026-10-24T17:43:23.422Z"
+}

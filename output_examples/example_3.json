@@ -1,0 +1,266 @@
+{
+  "run_id": "demo-003",
+  "status": "success",
+  "output": {
+    "summary": "Accra online revenue surged 148% from May to July 2026, driven by a 96% ad spend increase. Revenue grew from ₦1.48M to ₦3.68M, a ₦2.19M increase concentrated entirely in the online channel [H2]. Total ad spend rose 96% to ₦4.26M, with Meta spend up 204% to ₦3.04M, aligning with the revenue jump [H1]. Growth was led by CHIN-250 (+₦688K), PUFF-6PK (+₦430K), and PLNT-150 (+₦408K) [H6]. Stockouts, price changes, and normal seasonality were ruled out as causes [H7][H8][H9].",
+    "brief": {
+      "headline": "Accra online revenue surged 148% from May to July 2026, driven by a 96% ad spend increase.",
+      "summary": "Revenue grew from ₦1.48M to ₦3.68M, a ₦2.19M increase concentrated entirely in the online channel [H2]. Total ad spend rose 96% to ₦4.26M, with Meta spend up 204% to ₦3.04M, aligning with the revenue jump [H1]. Growth was led by CHIN-250 (+₦688K), PUFF-6PK (+₦430K), and PLNT-150 (+₦408K) [H6]. Stockouts, price changes, and normal seasonality were ruled out as causes [H7][H8][H9].",
+      "change": {
+        "metric": "revenue",
+        "from": 1482300,
+        "to": 3676400,
+        "changePct": 1.4801996896714564,
+        "unit": "NGN",
+        "baseline": "2026-05",
+        "target": "2026-07",
+        "scope": "Accra, online"
+      },
+      "causes": [
+        {
+          "id": "H1",
+          "statement": "Increased ad spend on Meta and Google in Accra drove higher online traffic and conversions.",
+          "finding": "Total Accra ad spend rose 96.0% from ₦2.17M (May) to ₦4.26M (July). Meta spend surged 203.9% (₦1.00M→₦3.04M), Google +3.4% (₦531K→₦550K), radio +7.5% (₦422K→₦453K), billboard flat (-0.4%). The large Meta increase aligns with the 148% online revenue growth. Follow-up evidence q_ae30466deafe5be7 reviewed (4 rows).",
+          "confidence": 0.85,
+          "evidence": [
+            {
+              "queryId": "q_aba873670f186f0d",
+              "sql": "SELECT platform, SUM(CASE WHEN month = '2026-07' THEN spend_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-05' THEN spend_ngn ELSE 0 END) AS baseline FROM kola.ad_platform WHERE city = 'Accra' AND month IN ('2026-05', '2026-07') GROUP BY platform ORDER BY platform",
+              "source": "live",
+              "rows": 4
+            },
+            {
+              "queryId": "q_ae30466deafe5be7",
+              "sql": "SELECT platform, SUM(spend_ngn) AS total_spend_ngn, SUM(impressions) AS total_impressions, SUM(clicks) AS total_clicks, SUM(spend_ngn)/NULLIF(SUM(clicks),0) AS cpc_ngn FROM kola.ad_platform WHERE city='Accra' AND month IN ('2026-05','2026-06','2026-07') GROUP BY platform ORDER BY total_spend_ngn DESC",
+              "source": "live",
+              "rows": 4
+            }
+          ]
+        },
+        {
+          "id": "H2",
+          "statement": "Most of the change sits in the online channel",
+          "finding": "The change is concentrated in: online ₦2.19M (100% of the net change).",
+          "share": 1,
+          "confidence": 0.9,
+          "evidence": [
+            {
+              "queryId": "q_89cbd04cfccbfbe9",
+              "sql": "SELECT channel, SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-05' THEN revenue_ngn ELSE 0 END) AS baseline FROM kola.erp_sales WHERE month IN ('2026-05', '2026-07') AND city = 'Accra' GROUP BY channel ORDER BY channel",
+              "source": "live",
+              "rows": 3
+            }
+          ]
+        },
+        {
+          "id": "H6",
+          "statement": "Most of the change sits in Chin-Chin 250g (CHIN-250) and Puff-Puff Mix 6-pack (PUFF-6PK) and Plantain Chips 150g (PLNT-150)",
+          "finding": "The change is concentrated in: Chin-Chin 250g (CHIN-250) ₦687.6k (31% of the net change); Puff-Puff Mix 6-pack (PUFF-6PK) ₦430.0k (20% of the net change); Plantain Chips 150g (PLNT-150) ₦407.7k (19% of the net change).",
+          "share": 0.6951825349801741,
+          "confidence": 0.9,
+          "evidence": [
+            {
+              "queryId": "q_ce1374ae9bf792c9",
+              "sql": "SELECT sku, SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-05' THEN revenue_ngn ELSE 0 END) AS baseline FROM kola.erp_sales WHERE month IN ('2026-05', '2026-07') AND city = 'Accra' AND channel = 'online' GROUP BY sku ORDER BY SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END) - SUM(CASE WHEN month = '2026-05' THEN revenue_ngn ELSE 0 END)",
+              "source": "live",
+              "rows": 6
+            }
+          ]
+        }
+      ],
+      "ruled_out": [
+        {
+          "id": "H7",
+          "statement": "Warehouse stockouts in Accra cut what could be sold",
+          "finding": "Accra warehouse stockouts did not increase between May and July 2026. Only GROU-200 had 1 stockout day in July (vs 0 in May); all other SKUs had 0 stockout days in both months. This minimal stockout change cannot explain the +148% revenue growth (₦1.48M → ₦3.68M).",
+          "evidence": [
+            {
+              "queryId": "q_220d171d6f85e994",
+              "sql": "SELECT sku, SUM(CASE WHEN month = '2026-07' THEN stockout_days ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-05' THEN stockout_days ELSE 0 END) AS baseline FROM kola.warehouse_inventory WHERE city = 'Accra' AND month IN ('2026-05', '2026-07') GROUP BY sku ORDER BY sku",
+              "source": "live",
+              "rows": 6
+            }
+          ]
+        },
+        {
+          "id": "H8",
+          "statement": "A list price change moved demand",
+          "finding": "No list price changes occurred for Accra between May and July 2026. The price_book query returned zero rows for effective_date > '2026-05-01' AND effective_date <= '2026-07-31' AND city IN ('Accra', 'ALL'), meaning no price changes were recorded during the period when revenue grew 148% (₦1.48M → ₦3.68M). The context table showing SKU targets vs baselines appears unrelated to the hypothesis period.",
+          "evidence": [
+            {
+              "queryId": "q_62d1b87ecf1412e1",
+              "sql": "SELECT effective_date, sku, city, old_price_ngn, new_price_ngn, reason FROM kola.price_book WHERE effective_date > '2026-05-01' AND effective_date <= '2026-07-31' AND city IN ('Accra', 'ALL') ORDER BY effective_date",
+              "source": "live",
+              "rows": 0
+            }
+          ]
+        },
+        {
+          "id": "H9",
+          "statement": "This is the normal seasonal pattern for these months",
+          "finding": "A year earlier the same months moved +4.4% (₦1.29M → ₦1.35M), against +148.0% now (₦1.48M → ₦3.68M): this is not the normal seasonal pattern.",
+          "evidence": [
+            {
+              "queryId": "q_83c4e9f3ce9799bb",
+              "sql": "SELECT month, SUM(revenue_ngn) AS value FROM kola.erp_sales WHERE month IN ('2025-05', '2025-07') AND city = 'Accra' AND channel = 'online' GROUP BY month ORDER BY month",
+              "source": "live",
+              "rows": 2
+            }
+          ]
+        }
+      ],
+      "unresolved": [
+        {
+          "id": "H3",
+          "statement": "A new product launch or promotional campaign specifically for Accra online boosted SKU-level sales.",
+          "finding": "All six Accra online SKUs grew units strongly from May to July 2026 (CHIN-250: 387→960, PLNT-150: 304→757, GROU-200: 192→469, COCO-100: 176→449, KOKO-500: 133→321, PUFF-6PK: 113→285). Revenue rose from ₦1.48M to ₦3.68M (+148%). The broad-based lift across every SKU is consistent with a general demand surge or marketing push, but the rows do not identify a specific new product launch or Accra-only promotional campaign. No launch dates, campaign tags, or SKU-level price changes are present."
+        },
+        {
+          "id": "H4",
+          "statement": "Improved delivery reliability or speed for Accra online orders increased customer retention and repeat purchases.",
+          "finding": "Model and numbers disagree. Model: Accra online logistics worsened from May to July 2026: late-delivery rate rose from 6.0% (29/485) to 7.2% (37/516) and average delay increased from 4.1 to 4.4 hours. This contradicts the hypothesis that improved delivery reliability or speed drove the 148% revenue growth.. Numbers: Deliveries moved somewhat (late-delivery rate 6.0%→7.2%, avg delay up to 4.4h), too little to be the main cause."
+        },
+        {
+          "id": "H5",
+          "statement": "Competitor exit or reduced competition in Accra online market captured additional demand for our products.",
+          "finding": "The evidence shows price complaints in Accra rose from 30 (May) to 40 (July), which does not indicate a competitor exit or reduced competition. A competitor exit would typically reduce price pressure and complaints, not increase them. No data on competitor presence, market share, or competitive actions is provided."
+        }
+      ],
+      "explained_share": -1,
+      "caveats": [
+        "Kòlá Foods is a fictional company; its systems hold synthetic demo data.",
+        "The size of [H1]'s effect cannot be measured directly from these systems; it is supported by direction and timing, not by a measured share."
+      ],
+      "written_by": "model"
+    },
+    "recommendations": [
+      "Keep the ad mix that moved results in Accra and measure its return per platform before scaling."
+    ],
+    "artifacts": [
+      {
+        "type": "trace",
+        "path": "logs/trace-demo-003.jsonl"
+      }
+    ]
+  },
+  "agents": [
+    {
+      "name": "Intake",
+      "role": "Scout Intent: classifies the request, guards it, issues the signed execution contract"
+    },
+    {
+      "name": "CFO",
+      "role": "Quotes the job and enforces its budget for model calls, queries, rounds and time"
+    },
+    {
+      "name": "Archivist",
+      "role": "H-MEM firm memory (recall before, remember after) and the World Model case file"
+    },
+    {
+      "name": "Planner",
+      "role": "Proposes competing hypotheses, starting from what the firm already knows"
+    },
+    {
+      "name": "Investigator",
+      "role": "Tests hypotheses with SQL through Zetaris; repairs failing queries"
+    },
+    {
+      "name": "Skeptic",
+      "role": "Judges every finding against the rows, disputes the model when the numbers disagree, demands follow-ups"
+    },
+    {
+      "name": "Writer",
+      "role": "Writes the evidence-linked brief: causes, what was ruled out, what is still unknown"
+    }
+  ],
+  "memory": {
+    "recalled": 0,
+    "stored": 9
+  },
+  "engines": {
+    "scout_intent": "contract 2b0f28f5 refreshed 2x",
+    "hmem": "0 recalled, 9 stored",
+    "world_model": "58 case-file events",
+    "markovian": "2 bounded steps (completed), ~0 tokens saved (estimated)"
+  },
+  "cost": {
+    "quote": {
+      "maxRounds": 4,
+      "maxQueries": 24,
+      "maxModelCalls": 40,
+      "maxSeconds": 480,
+      "rationale": "explain-a-change: up to 4 rounds of hypothesis testing"
+    },
+    "spent": {
+      "modelCalls": 12,
+      "queries": 11,
+      "rounds": 2,
+      "estTokens": 23539,
+      "seconds": 53
+    },
+    "escalations": []
+  },
+  "data_sources": {
+    "live": 11
+  },
+  "trace_id": "demo-003",
+  "log_file": "logs/trace-demo-003.jsonl",
+  "execution_time_seconds": 53.2,
+  "contract": {
+    "contractId": "88fda506-6395-420f-96d4-1074be1d8fb9",
+    "intent": {
+      "primary": "analysis.explain_change",
+      "parameters": {
+        "question": "Why did Accra online revenue grow between May and July 2026?",
+        "intent": "explain_change",
+        "metric": "revenue",
+        "direction": "up",
+        "filters": {
+          "city": "Accra",
+          "channel": "online"
+        },
+        "target_month": "2026-07",
+        "baseline_month": "2026-05",
+        "route": "investigate",
+        "risk": {
+          "level": "low",
+          "reasons": []
+        },
+        "confidence": 1,
+        "notes": []
+      },
+      "confidence": 1,
+      "alternates": []
+    },
+    "risk": {
+      "level": "low",
+      "flags": [],
+      "redactions": []
+    },
+    "toolPlan": [
+      {
+        "capability": "memory.recall",
+        "tool": "hmem.query"
+      },
+      {
+        "capability": "world.case",
+        "tool": "worldmodel.case"
+      },
+      {
+        "capability": "data.sql",
+        "tool": "zetaris.sql"
+      },
+      {
+        "capability": "memory.store",
+        "tool": "hmem.add"
+      }
+    ],
+    "expiresAt": "2026-10-24T17:48:35.040Z",
+    "registryVersion": 3,
+    "lineage": [
+      "2b0f28f5-60ec-4db8-8e91-a8b7b77cd499",
+      "004cafef-a0ce-4110-8816-617c404e2314",
+      "88fda506-6395-420f-96d4-1074be1d8fb9"
+    ]
+  }
+}

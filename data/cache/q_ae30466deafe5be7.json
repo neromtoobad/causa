@@ -1,0 +1,41 @@
+{
+ "sql": "SELECT platform, SUM(spend_ngn) AS total_spend_ngn, SUM(impressions) AS total_impressions, SUM(clicks) AS total_clicks, SUM(spend_ngn)/NULLIF(SUM(clicks),0) AS cpc_ngn FROM kola.ad_platform WHERE city='Accra' AND month IN ('2026-05','2026-06','2026-07') GROUP BY platform ORDER BY total_spend_ngn DESC",
+ "columns": [
+  "platform",
+  "total_spend_ngn",
+  "total_impressions",
+  "total_clicks",
+  "cpc_ngn"
+ ],
+ "rows": [
+  [
+   "meta",
+   "7082002.0",
+   "7702429",
+   "94205",
+   "75.17649806273552"
+  ],
+  [
+   "google",
+   "1615849.0",
+   "1172362",
+   "23428",
+   "68.97084684992316"
+  ],
+  [
+   "radio",
+   "1318354.0",
+   "4267633",
+   "0",
+   null
+  ],
+  [
+   "billboard",
+   "658814.0",
+   "4541018",
+   "0",
+   null
+  ]
+ ],
+ "recordedAt": "2026-10-24T17:43:38.696Z"
+}

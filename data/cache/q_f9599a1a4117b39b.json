@@ -1,0 +1,55 @@
+{
+ "sql": "SELECT sku, SUM(CASE WHEN month='2026-07' THEN units ELSE 0 END) AS units_jul, SUM(CASE WHEN month='2026-05' THEN units ELSE 0 END) AS units_may, SUM(CASE WHEN month='2026-07' THEN revenue_ngn ELSE 0 END) AS rev_jul, SUM(CASE WHEN month='2026-05' THEN revenue_ngn ELSE 0 END) AS rev_may FROM kola.erp_sales WHERE city='Accra' AND channel='online' GROUP BY sku ORDER BY sku",
+ "columns": [
+  "sku",
+  "units_jul",
+  "units_may",
+  "rev_jul",
+  "rev_may"
+ ],
+ "rows": [
+  [
+   "CHIN-250",
+   "960",
+   "387",
+   "1152000.0",
+   "464400.0"
+  ],
+  [
+   "COCO-100",
+   "449",
+   "176",
+   "224500.0",
+   "88000.0"
+  ],
+  [
+   "GROU-200",
+   "469",
+   "192",
+   "328300.0",
+   "134400.0"
+  ],
+  [
+   "KOKO-500",
+   "321",
+   "133",
+   "577800.0",
+   "239400.0"
+  ],
+  [
+   "PLNT-150",
+   "757",
+   "304",
+   "681300.0",
+   "273600.0"
+  ],
+  [
+   "PUFF-6PK",
+   "285",
+   "113",
+   "712500.0",
+   "282500.0"
+  ]
+ ],
+ "recordedAt": "2026-10-24T17:43:15.175Z"
+}
