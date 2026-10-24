@@ -1,0 +1,227 @@
+{
+  "run_id": "demo-002",
+  "status": "success",
+  "output": {
+    "summary": "Helpdesk tickets in Abuja rose 101.9% mainly because increased late deliveries in Abuja during September 2026 generated more delivery_delay tickets. helpdesk tickets (Abuja) went 54 tickets → 109 tickets (+101.9%) from August 2026 to September 2026. [H2] Deliveries got much worse: late-delivery rate 5.9%→19.0%, avg delay up to 14.5h; carrier changed from Kòlá Fleet to SwiftRoute 3PL. Delivery-delay tickets carry 71% of the rise. Ruled out: abuja stockout days for key SKUs rose in September 2026, driving out_of_stock tickets [H1]; price increases for Abuja SKUs effective September 2026 triggered price_complaint tickets [H3]; normal seasonal pattern in Abuja causes higher helpdesk volume each September versus August [H4].",
+    "brief": {
+      "headline": "Helpdesk tickets in Abuja rose 101.9% mainly because increased late deliveries in Abuja during September 2026 generated more delivery_delay tickets.",
+      "summary": "helpdesk tickets (Abuja) went 54 tickets → 109 tickets (+101.9%) from August 2026 to September 2026. [H2] Deliveries got much worse: late-delivery rate 5.9%→19.0%, avg delay up to 14.5h; carrier changed from Kòlá Fleet to SwiftRoute 3PL. Delivery-delay tickets carry 71% of the rise. Ruled out: abuja stockout days for key SKUs rose in September 2026, driving out_of_stock tickets [H1]; price increases for Abuja SKUs effective September 2026 triggered price_complaint tickets [H3]; normal seasonal pattern in Abuja causes higher helpdesk volume each September versus August [H4].",
+      "change": {
+        "metric": "helpdesk tickets",
+        "from": 54,
+        "to": 109,
+        "changePct": 1.0185185185185186,
+        "unit": "tickets",
+        "baseline": "2026-08",
+        "target": "2026-09",
+        "scope": "Abuja"
+      },
+      "causes": [
+        {
+          "id": "H2",
+          "statement": "Increased late deliveries in Abuja during September 2026 generated more delivery_delay tickets.",
+          "finding": "Deliveries got much worse: late-delivery rate 5.9%→19.0%, avg delay up to 14.5h; carrier changed from Kòlá Fleet to SwiftRoute 3PL. Delivery-delay tickets carry 71% of the rise.",
+          "share": 0.7090909090909091,
+          "confidence": 0.85,
+          "evidence": [
+            {
+              "queryId": "q_41cbeae790738b83",
+              "sql": "SELECT month, carrier, SUM(deliveries_scheduled) AS scheduled, SUM(deliveries_late) AS late, AVG(avg_delay_hours) AS delay_hours FROM kola.logistics WHERE city = 'Abuja' AND month IN ('2026-08', '2026-09') GROUP BY month, carrier ORDER BY month",
+              "source": "live",
+              "rows": 2
+            }
+          ]
+        },
+        {
+          "id": "H5",
+          "statement": "Most of the change sits in delivery delay and out of stock tickets",
+          "finding": "The change is concentrated in: delivery_delay 39 tickets (71% of the net change); out_of_stock 20 tickets (36% of the net change). Partly offset by billing -1 tickets, product_quality -3 tickets.",
+          "share": 1,
+          "confidence": 0.9,
+          "evidence": [
+            {
+              "queryId": "q_934bcb74ddfb4513",
+              "sql": "SELECT category, SUM(CASE WHEN month = '2026-09' THEN tickets ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-08' THEN tickets ELSE 0 END) AS baseline FROM kola.helpdesk WHERE month IN ('2026-08', '2026-09') AND city = 'Abuja' GROUP BY category ORDER BY category",
+              "source": "live",
+              "rows": 5
+            }
+          ]
+        }
+      ],
+      "ruled_out": [
+        {
+          "id": "H1",
+          "statement": "Abuja stockout days for key SKUs rose in September 2026, driving out_of_stock tickets.",
+          "finding": "No meaningful stockouts in Abuja: no SKU was out of stock 5+ days in 2026-09.",
+          "evidence": [
+            {
+              "queryId": "q_e242aa1bea26ac36",
+              "sql": "SELECT sku, SUM(CASE WHEN month = '2026-09' THEN stockout_days ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-08' THEN stockout_days ELSE 0 END) AS baseline FROM kola.warehouse_inventory WHERE city = 'Abuja' AND month IN ('2026-08', '2026-09') GROUP BY sku ORDER BY sku",
+              "source": "live",
+              "rows": 6
+            }
+          ]
+        },
+        {
+          "id": "H3",
+          "statement": "Price increases for Abuja SKUs effective September 2026 triggered price_complaint tickets.",
+          "finding": "Only one Abuja SKU (KOKO-500) had a price increase in September 2026: +2.8% (₦1,800→₦1,850) effective 2026-09-01. However, price_complaint tickets remained flat at 6 (baseline 6 → target 6), contributing 0% of the +55 ticket increase. The surge came from delivery_delay (+39) and out_of_stock (+20).",
+          "evidence": [
+            {
+              "queryId": "q_ce6a5fecf882dbcb",
+              "sql": "SELECT effective_date, sku, city, old_price_ngn, new_price_ngn, reason FROM kola.price_book WHERE effective_date > '2026-08-01' AND effective_date <= '2026-09-31' AND city IN ('Abuja', 'ALL') ORDER BY effective_date",
+              "source": "live",
+              "rows": 1
+            }
+          ]
+        },
+        {
+          "id": "H4",
+          "statement": "Normal seasonal pattern in Abuja causes higher helpdesk volume each September versus August.",
+          "finding": "A year earlier the same months moved -5.6%, against +101.9% now: this is not the normal seasonal pattern.",
+          "evidence": [
+            {
+              "queryId": "q_f21dbfd35229aab3",
+              "sql": "SELECT month, SUM(tickets) AS value FROM kola.helpdesk WHERE month IN ('2025-08', '2025-09') AND city = 'Abuja' GROUP BY month ORDER BY month",
+              "source": "live",
+              "rows": 2
+            }
+          ]
+        }
+      ],
+      "unresolved": [],
+      "explained_share": 0.71,
+      "caveats": [
+        "Kòlá Foods is a fictional company; its systems hold synthetic demo data."
+      ],
+      "written_by": "rules"
+    },
+    "recommendations": [
+      "Hold the logistics partner in Abuja to an on-time SLA and track late deliveries weekly; consider reverting if it does not recover within a month."
+    ],
+    "artifacts": [
+      {
+        "type": "trace",
+        "path": "logs/trace-demo-002.jsonl"
+      }
+    ]
+  },
+  "agents": [
+    {
+      "name": "Intake",
+      "role": "Scout Intent: classifies the request, guards it, issues the signed execution contract"
+    },
+    {
+      "name": "CFO",
+      "role": "Quotes the job and enforces its budget for model calls, queries, rounds and time"
+    },
+    {
+      "name": "Archivist",
+      "role": "H-MEM firm memory (recall before, remember after) and the World Model case file"
+    },
+    {
+      "name": "Planner",
+      "role": "Proposes competing hypotheses, starting from what the firm already knows"
+    },
+    {
+      "name": "Investigator",
+      "role": "Tests hypotheses with SQL through Zetaris; repairs failing queries"
+    },
+    {
+      "name": "Skeptic",
+      "role": "Judges every finding against the rows, disputes the model when the numbers disagree, demands follow-ups"
+    },
+    {
+      "name": "Writer",
+      "role": "Writes the evidence-linked brief: causes, what was ruled out, what is still unknown"
+    }
+  ],
+  "memory": {
+    "recalled": 6,
+    "stored": 5
+  },
+  "engines": {
+    "scout_intent": "contract f457a3e5 refreshed 1x",
+    "hmem": "6 recalled, 5 stored",
+    "world_model": "80 case-file events",
+    "markovian": "1 bounded steps (completed), ~0 tokens saved (estimated)"
+  },
+  "cost": {
+    "quote": {
+      "maxRounds": 4,
+      "maxQueries": 24,
+      "maxModelCalls": 40,
+      "maxSeconds": 480,
+      "rationale": "explain-a-change: up to 4 rounds of hypothesis testing"
+    },
+    "spent": {
+      "modelCalls": 7,
+      "queries": 6,
+      "rounds": 1,
+      "estTokens": 13723,
+      "seconds": 274
+    },
+    "escalations": []
+  },
+  "data_sources": {
+    "live": 6
+  },
+  "trace_id": "demo-002",
+  "log_file": "logs/trace-demo-002.jsonl",
+  "execution_time_seconds": 273.7,
+  "contract": {
+    "contractId": "00fc0b63-f707-4c40-9025-34c00ea4c171",
+    "intent": {
+      "primary": "analysis.explain_change",
+      "parameters": {
+        "question": "What caused the jump in Abuja helpdesk tickets in September 2026?",
+        "intent": "explain_change",
+        "metric": "tickets",
+        "direction": "up",
+        "filters": {
+          "city": "Abuja"
+        },
+        "target_month": "2026-09",
+        "baseline_month": "2026-08",
+        "route": "investigate",
+        "risk": {
+          "level": "low",
+          "reasons": []
+        },
+        "confidence": 1,
+        "notes": []
+      },
+      "confidence": 1,
+      "alternates": []
+    },
+    "risk": {
+      "level": "low",
+      "flags": [],
+      "redactions": []
+    },
+    "toolPlan": [
+      {
+        "capability": "memory.recall",
+        "tool": "hmem.query"
+      },
+      {
+        "capability": "world.case",
+        "tool": "worldmodel.case"
+      },
+      {
+        "capability": "data.sql",
+        "tool": "zetaris.sql"
+      },
+      {
+        "capability": "memory.store",
+        "tool": "hmem.add"
+      }
+    ],
+    "expiresAt": "2026-10-24T17:02:20.277Z",
+    "registryVersion": 3,
+    "lineage": [
+      "f457a3e5-9993-4f45-ae81-a0fdbaeaa0bc",
+      "00fc0b63-f707-4c40-9025-34c00ea4c171"
+    ]
+  }
+}

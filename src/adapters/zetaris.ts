@@ -85,8 +85,8 @@ export class ZetarisClient {
     } catch {
       /* non-JSON error page */
     }
-    if (!res.ok || body.error || body.errorMessage) {
-      const msg = String(body.errorMessage ?? body.message ?? body.error ?? text).slice(0, 400);
+    if (!res.ok || body.error || body.errorMessage || (body.msg && !body.data)) {
+      const msg = String(body.errorMessage ?? body.msg ?? body.message ?? body.error ?? text).replace(/^org\.apache\.hive\.service\.cli\.HiveSQLException: Error running query: /, "").slice(0, 400);
       throw new ZetarisError(msg || `HTTP ${res.status}`, clean, "sql");
     }
     const result: QueryResult = {

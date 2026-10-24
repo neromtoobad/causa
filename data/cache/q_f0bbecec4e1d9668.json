@@ -1,0 +1,8 @@
+{
+ "sql": "CREATE SCHEMASTORE VIEW warehouse_inventory WITH CONTAINER kola AS SELECT r.month AS month, r.city AS city, r.sku AS sku, CAST(r.opening_stock_units AS BIGINT) AS opening_stock_units, CAST(r.received_units AS BIGINT) AS received_units, CAST(r.stockout_days AS BIGINT) AS stockout_days FROM kola_systems.warehouse_inventory_src LATERAL VIEW explode(records) AS r",
+ "columns": [
+  "Result"
+ ],
+ "rows": [],
+ "recordedAt": "2026-10-24T16:50:02.222Z"
+}

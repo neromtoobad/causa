@@ -1,0 +1,8 @@
+{
+ "sql": "CREATE LIGHTNING REST TABLE price_book_src FROM KOLA_SYSTEMS REQUEST(endpoint \"http://host.docker.internal:8000/sources/price_book.json\", method \"get\", response_type \"json\", http_encoding \"URLENCODED\") HEADER () BODY ()",
+ "columns": [
+  "Result"
+ ],
+ "rows": [],
+ "recordedAt": "2026-10-24T16:50:03.299Z"
+}

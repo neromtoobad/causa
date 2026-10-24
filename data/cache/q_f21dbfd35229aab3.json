@@ -1,0 +1,18 @@
+{
+ "sql": "SELECT month, SUM(tickets) AS value FROM kola.helpdesk WHERE month IN ('2025-08', '2025-09') AND city = 'Abuja' GROUP BY month ORDER BY month",
+ "columns": [
+  "month",
+  "value"
+ ],
+ "rows": [
+  [
+   "2025-08",
+   "54"
+  ],
+  [
+   "2025-09",
+   "51"
+  ]
+ ],
+ "recordedAt": "2026-10-24T17:01:52.327Z"
+}

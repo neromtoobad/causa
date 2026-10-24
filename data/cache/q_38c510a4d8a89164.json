@@ -1,0 +1,8 @@
+{
+ "sql": "CREATE SCHEMASTORE VIEW product_catalog WITH CONTAINER kola AS SELECT r.sku AS sku, r.product_name AS product_name, r.category AS category, CAST(r.list_price_ngn_2025 AS DOUBLE) AS list_price_ngn_2025 FROM kola_systems.product_catalog_src LATERAL VIEW explode(records) AS r",
+ "columns": [
+  "Result"
+ ],
+ "rows": [],
+ "recordedAt": "2026-10-24T16:50:06.119Z"
+}

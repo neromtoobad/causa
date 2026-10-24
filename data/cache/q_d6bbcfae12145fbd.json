@@ -1,0 +1,30 @@
+{
+ "sql": "SELECT sku, channel, SUM(CASE WHEN month = '2026-08' THEN revenue_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END) AS baseline FROM kola.erp_sales WHERE city = 'Lagos' AND sku IN ('PLNT-150') AND month IN ('2026-07', '2026-08') GROUP BY sku, channel ORDER BY sku, channel",
+ "columns": [
+  "sku",
+  "channel",
+  "target",
+  "baseline"
+ ],
+ "rows": [
+  [
+   "PLNT-150",
+   "online",
+   "896310.0",
+   "952200.0"
+  ],
+  [
+   "PLNT-150",
+   "retail",
+   "3994065.0",
+   "4435200.0"
+  ],
+  [
+   "PLNT-150",
+   "wholesale",
+   "2384640.0",
+   "2606400.0"
+  ]
+ ],
+ "recordedAt": "2026-10-24T16:55:45.593Z"
+}

@@ -1,0 +1,48 @@
+{
+ "sql": "SELECT p.category, p.product_name, SUM(CASE WHEN s.month = '2026-07' THEN s.units ELSE 0 END) AS jul_units, SUM(CASE WHEN s.month = '2026-05' THEN s.units ELSE 0 END) AS may_units FROM kola.erp_sales s JOIN kola.product_catalog p ON s.sku = p.sku WHERE s.city = 'Accra' AND s.channel = 'online' GROUP BY p.category, p.product_name ORDER BY ABS(SUM(CASE WHEN s.month = '2026-07' THEN s.units ELSE 0 END) - SUM(CASE WHEN s.month = '2026-05' THEN s.units ELSE 0 END)) DESC LIMIT 50",
+ "columns": [
+  "category",
+  "product_name",
+  "jul_units",
+  "may_units"
+ ],
+ "rows": [
+  [
+   "snack",
+   "Chin-Chin 250g",
+   "960",
+   "387"
+  ],
+  [
+   "snack",
+   "Plantain Chips 150g",
+   "757",
+   "304"
+  ],
+  [
+   "snack",
+   "Groundnut Brittle 200g",
+   "469",
+   "192"
+  ],
+  [
+   "snack",
+   "Coconut Candy 100g",
+   "449",
+   "176"
+  ],
+  [
+   "snack",
+   "Kokoro Sticks 500g",
+   "321",
+   "133"
+  ],
+  [
+   "mix",
+   "Puff-Puff Mix 6-pack",
+   "285",
+   "113"
+  ]
+ ],
+ "recordedAt": "2026-10-24T17:04:11.057Z"
+}

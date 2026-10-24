@@ -1,0 +1,8 @@
+{
+ "sql": "CREATE SCHEMASTORE VIEW price_book WITH CONTAINER kola AS SELECT r.effective_date AS effective_date, r.sku AS sku, r.city AS city, CAST(r.old_price_ngn AS DOUBLE) AS old_price_ngn, CAST(r.new_price_ngn AS DOUBLE) AS new_price_ngn, r.reason AS reason FROM kola_systems.price_book_src LATERAL VIEW explode(records) AS r",
+ "columns": [
+  "Result"
+ ],
+ "rows": [],
+ "recordedAt": "2026-10-24T16:50:03.566Z"
+}

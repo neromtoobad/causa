@@ -1,0 +1,36 @@
+{
+ "sql": "SELECT category, SUM(CASE WHEN month = '2026-09' THEN tickets ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-08' THEN tickets ELSE 0 END) AS baseline FROM kola.helpdesk WHERE month IN ('2026-08', '2026-09') AND city = 'Abuja' GROUP BY category ORDER BY category",
+ "columns": [
+  "category",
+  "target",
+  "baseline"
+ ],
+ "rows": [
+  [
+   "billing",
+   "5",
+   "6"
+  ],
+  [
+   "delivery_delay",
+   "59",
+   "20"
+  ],
+  [
+   "out_of_stock",
+   "24",
+   "4"
+  ],
+  [
+   "price_complaint",
+   "6",
+   "6"
+  ],
+  [
+   "product_quality",
+   "15",
+   "18"
+  ]
+ ],
+ "recordedAt": "2026-10-24T16:59:40.581Z"
+}

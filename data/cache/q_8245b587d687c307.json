@@ -1,0 +1,31 @@
+{
+ "sql": "SELECT platform, SUM(CASE WHEN month = '2026-08' THEN spend_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-07' THEN spend_ngn ELSE 0 END) AS baseline FROM kola.ad_platform WHERE city = 'Lagos' AND month IN ('2026-07', '2026-08') GROUP BY platform ORDER BY platform",
+ "columns": [
+  "platform",
+  "target",
+  "baseline"
+ ],
+ "rows": [
+  [
+   "billboard",
+   "807927.0",
+   "779071.0"
+  ],
+  [
+   "google",
+   "1953012.0",
+   "1938588.0"
+  ],
+  [
+   "meta",
+   "3482206.0",
+   "3479548.0"
+  ],
+  [
+   "radio",
+   "1503307.0",
+   "1491383.0"
+  ]
+ ],
+ "recordedAt": "2026-10-24T16:54:45.323Z"
+}

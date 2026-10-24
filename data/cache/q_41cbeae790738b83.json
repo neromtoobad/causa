@@ -1,0 +1,27 @@
+{
+ "sql": "SELECT month, carrier, SUM(deliveries_scheduled) AS scheduled, SUM(deliveries_late) AS late, AVG(avg_delay_hours) AS delay_hours FROM kola.logistics WHERE city = 'Abuja' AND month IN ('2026-08', '2026-09') GROUP BY month, carrier ORDER BY month",
+ "columns": [
+  "month",
+  "carrier",
+  "scheduled",
+  "late",
+  "delay_hours"
+ ],
+ "rows": [
+  [
+   "2026-08",
+   "Kòlá Fleet",
+   "931",
+   "55",
+   "4.2"
+  ],
+  [
+   "2026-09",
+   "SwiftRoute 3PL",
+   "939",
+   "178",
+   "14.5"
+  ]
+ ],
+ "recordedAt": "2026-10-24T16:59:47.881Z"
+}

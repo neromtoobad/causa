@@ -1,0 +1,30 @@
+{
+ "sql": "SELECT sku, channel, SUM(CASE WHEN month = '2026-08' THEN revenue_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END) AS baseline FROM kola.erp_sales WHERE city = 'Lagos' AND sku IN ('CHIN-250') AND month IN ('2026-07', '2026-08') GROUP BY sku, channel ORDER BY sku, channel",
+ "columns": [
+  "sku",
+  "channel",
+  "target",
+  "baseline"
+ ],
+ "rows": [
+  [
+   "CHIN-250",
+   "online",
+   "933600.0",
+   "1623600.0"
+  ],
+  [
+   "CHIN-250",
+   "retail",
+   "4231200.0",
+   "7168800.0"
+  ],
+  [
+   "CHIN-250",
+   "wholesale",
+   "2751600.0",
+   "4375200.0"
+  ]
+ ],
+ "recordedAt": "2026-10-24T16:55:46.452Z"
+}

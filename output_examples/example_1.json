@@ -1,0 +1,264 @@
+{
+  "run_id": "demo-001",
+  "status": "success",
+  "output": {
+    "summary": "Lagos revenue fell 12.7% in August 2026 due to CHIN-250 stockouts and PLNT-150 price-driven volume loss. Revenue dropped from ₦42.18M to ₦36.82M, a ₦5.37M decline. CHIN-250 stockouts (13 days in August vs. 0 in July) caused a ₦5.25M revenue fall, accounting for 98% of the total drop across online, retail, and wholesale channels [H1][H2]. PLNT-150's 15% price increase led to a ~20.9% volume decline, cutting revenue by ₦718,785 (13% of the total drop) [H3]. The decline was concentrated in retail (56%) and wholesale (31%) channels [H7]. Reduced ad spend and normal seasonality were ruled out as causes [H5][H6].",
+    "brief": {
+      "headline": "Lagos revenue fell 12.7% in August 2026 due to CHIN-250 stockouts and PLNT-150 price-driven volume loss.",
+      "summary": "Revenue dropped from ₦42.18M to ₦36.82M, a ₦5.37M decline. CHIN-250 stockouts (13 days in August vs. 0 in July) caused a ₦5.25M revenue fall, accounting for 98% of the total drop across online, retail, and wholesale channels [H1][H2]. PLNT-150's 15% price increase led to a ~20.9% volume decline, cutting revenue by ₦718,785 (13% of the total drop) [H3]. The decline was concentrated in retail (56%) and wholesale (31%) channels [H7]. Reduced ad spend and normal seasonality were ruled out as causes [H5][H6].",
+      "change": {
+        "metric": "revenue",
+        "from": 42182900,
+        "to": 36817915,
+        "changePct": -0.12718388256852894,
+        "unit": "NGN",
+        "baseline": "2026-07",
+        "target": "2026-08",
+        "scope": "Lagos"
+      },
+      "causes": [
+        {
+          "id": "H1",
+          "statement": "Stockout days for key Lagos SKUs increased in August 2026, reducing available inventory and sales.",
+          "finding": "CHIN-250 had 13 stockout days in August 2026 versus 0 in July 2026 in Lagos warehouses, while all other SKUs had 0 stockout days in both months. CHIN-250 revenue fell by ₦5.25M (from ₦13.17M to ₦7.92M), accounting for ~98% of the total ₦5.37M Lagos revenue decline. The stockout aligns with the magnitude and timing of the drop. Confirmed against sales: CHIN-250 online -42.5% (₦-690.0k); CHIN-250 retail -41.0% (₦-2.94M); CHIN-250 wholesale -37.1% (₦-1.62M).",
+          "share": 0.9787911802176521,
+          "confidence": 0.95,
+          "evidence": [
+            {
+              "queryId": "q_78cd5fb1d9b272b6",
+              "sql": "SELECT sku, SUM(CASE WHEN month = '2026-08' THEN stockout_days ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-07' THEN stockout_days ELSE 0 END) AS baseline FROM kola.warehouse_inventory WHERE city = 'Lagos' AND month IN ('2026-07', '2026-08') GROUP BY sku ORDER BY sku",
+              "source": "live",
+              "rows": 6
+            },
+            {
+              "queryId": "q_d65efcdfd205fd4c",
+              "sql": "SELECT sku, channel, SUM(CASE WHEN month = '2026-08' THEN revenue_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END) AS baseline FROM kola.erp_sales WHERE city = 'Lagos' AND sku IN ('CHIN-250') AND month IN ('2026-07', '2026-08') GROUP BY sku, channel ORDER BY sku, channel",
+              "source": "live",
+              "rows": 3
+            }
+          ]
+        },
+        {
+          "id": "H3",
+          "statement": "Price increases for Lagos SKUs effective August 2026 reduced demand and revenue.",
+          "finding": "Only one Lagos SKU had a price increase in August 2026: PLNT-150 rose 15% (₦900→₦1,035) effective 2026-08-01 due to plantain supply shortage. Despite the higher price, PLNT-150 revenue fell 9.0% (₦7,993,800→₦7,275,015), implying unit volume dropped ~20.9%. The price increase therefore cut revenue for this SKU because volume fell more than price rose. PLNT-150's revenue decline of ₦718,785 accounts for ~13% of the total Lagos revenue drop of ₦5,364,985. Confirmed against sales: PLNT-150 online -5.9% (₦-55.9k); PLNT-150 retail -9.9% (₦-441.1k); PLNT-150 wholesale -8.5% (₦-221.8k).",
+          "share": 0.13397707542518758,
+          "confidence": 0.95,
+          "evidence": [
+            {
+              "queryId": "q_f8b2d76e0c50d9b3",
+              "sql": "SELECT effective_date, sku, city, old_price_ngn, new_price_ngn, reason FROM kola.price_book WHERE effective_date > '2026-07-01' AND effective_date <= '2026-08-31' AND city IN ('Lagos', 'ALL') ORDER BY effective_date",
+              "source": "live",
+              "rows": 1
+            },
+            {
+              "queryId": "q_d6bbcfae12145fbd",
+              "sql": "SELECT sku, channel, SUM(CASE WHEN month = '2026-08' THEN revenue_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END) AS baseline FROM kola.erp_sales WHERE city = 'Lagos' AND sku IN ('PLNT-150') AND month IN ('2026-07', '2026-08') GROUP BY sku, channel ORDER BY sku, channel",
+              "source": "live",
+              "rows": 3
+            }
+          ]
+        },
+        {
+          "id": "H2",
+          "statement": "Most of the change sits in Chin-Chin 250g (CHIN-250)",
+          "finding": "The change is concentrated in: Chin-Chin 250g (CHIN-250) ₦-5.25M (98% of the net change). Partly offset by Coconut Candy 100g (COCO-100) ₦500, Puff-Puff Mix 6-pack (PUFF-6PK) ₦92.5k.",
+          "share": 0.9787911802176521,
+          "confidence": 0.9,
+          "evidence": [
+            {
+              "queryId": "q_de1244e58938d6d9",
+              "sql": "SELECT sku, SUM(CASE WHEN month = '2026-08' THEN revenue_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END) AS baseline FROM kola.erp_sales WHERE month IN ('2026-07', '2026-08') AND city = 'Lagos' GROUP BY sku ORDER BY SUM(CASE WHEN month = '2026-08' THEN revenue_ngn ELSE 0 END) - SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END)",
+              "source": "live",
+              "rows": 6
+            }
+          ]
+        },
+        {
+          "id": "H7",
+          "statement": "Most of the change sits in the retail and wholesale channels",
+          "finding": "The change is concentrated in: retail ₦-2.98M (56% of the net change); wholesale ₦-1.69M (31% of the net change).",
+          "share": 0.8701040170662173,
+          "confidence": 0.9,
+          "evidence": [
+            {
+              "queryId": "q_b6de9062f982084d",
+              "sql": "SELECT channel, SUM(CASE WHEN month = '2026-08' THEN revenue_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END) AS baseline FROM kola.erp_sales WHERE month IN ('2026-07', '2026-08') AND city = 'Lagos' GROUP BY channel ORDER BY channel",
+              "source": "live",
+              "rows": 3
+            }
+          ]
+        }
+      ],
+      "ruled_out": [
+        {
+          "id": "H5",
+          "statement": "Reduced ad spend targeting Lagos in August 2026 lowered traffic and conversions.",
+          "finding": "Total Lagos ad spend increased by 0.8% from ₦7.69M in July 2026 to ₦7.75M in August 2026. All four platforms showed increases: billboard +3.7% (₦779K→₦808K), Google +0.7% (₦1.94M→₦1.95M), Meta +0.1% (₦3.48M→₦3.48M), radio +0.8% (₦1.49M→₦1.50M). Higher ad spend cannot explain a revenue decline.",
+          "evidence": [
+            {
+              "queryId": "q_8245b587d687c307",
+              "sql": "SELECT platform, SUM(CASE WHEN month = '2026-08' THEN spend_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-07' THEN spend_ngn ELSE 0 END) AS baseline FROM kola.ad_platform WHERE city = 'Lagos' AND month IN ('2026-07', '2026-08') GROUP BY platform ORDER BY platform",
+              "source": "live",
+              "rows": 4
+            }
+          ]
+        },
+        {
+          "id": "H6",
+          "statement": "This is the normal seasonal pattern for these months",
+          "finding": "In 2025, Lagos revenue moved from ₦37,598,500 in July to ₦37,732,450 in August, a +0.4% change. In 2026, the same months moved from ₦42,182,900 to ₦36,817,915, a -12.7% change. The direction and magnitude differ sharply, so the 2026 drop is not explained by the normal seasonal pattern.",
+          "evidence": [
+            {
+              "queryId": "q_4872c4dc03a81438",
+              "sql": "SELECT month, SUM(revenue_ngn) AS value FROM kola.erp_sales WHERE month IN ('2025-07', '2025-08') AND city = 'Lagos' GROUP BY month ORDER BY month",
+              "source": "live",
+              "rows": 2
+            }
+          ]
+        }
+      ],
+      "unresolved": [
+        {
+          "id": "H4",
+          "statement": "Increased late deliveries in Lagos during August 2026 caused order cancellations and lost revenue.",
+          "finding": "Late-delivery rate rose from 6.4% (107/1,682) in July 2026 to 7.5% (136/1,805) in August 2026, and average delay increased from 5.0 to 5.1 hours. The change is small and the data do not link late deliveries to cancellations, refused orders, or lost repeat revenue."
+        }
+      ],
+      "explained_share": 1,
+      "caveats": [
+        "Kòlá Foods is a fictional company; its systems hold synthetic demo data."
+      ],
+      "written_by": "model"
+    },
+    "recommendations": [
+      "Raise safety stock and reorder points for the stocked-out SKUs in Lagos, and alert the warehouse when cover falls under two weeks.",
+      "Review the recent price rise in Lagos: compare the margin gained with the volume lost before extending it to other cities."
+    ],
+    "artifacts": [
+      {
+        "type": "trace",
+        "path": "logs/trace-demo-001.jsonl"
+      }
+    ]
+  },
+  "agents": [
+    {
+      "name": "Intake",
+      "role": "Scout Intent: classifies the request, guards it, issues the signed execution contract"
+    },
+    {
+      "name": "CFO",
+      "role": "Quotes the job and enforces its budget for model calls, queries, rounds and time"
+    },
+    {
+      "name": "Archivist",
+      "role": "H-MEM firm memory (recall before, remember after) and the World Model case file"
+    },
+    {
+      "name": "Planner",
+      "role": "Proposes competing hypotheses, starting from what the firm already knows"
+    },
+    {
+      "name": "Investigator",
+      "role": "Tests hypotheses with SQL through Zetaris; repairs failing queries"
+    },
+    {
+      "name": "Skeptic",
+      "role": "Judges every finding against the rows, disputes the model when the numbers disagree, demands follow-ups"
+    },
+    {
+      "name": "Writer",
+      "role": "Writes the evidence-linked brief: causes, what was ruled out, what is still unknown"
+    }
+  ],
+  "memory": {
+    "recalled": 0,
+    "stored": 7
+  },
+  "engines": {
+    "scout_intent": "contract b0c2ab1b refreshed 2x",
+    "hmem": "0 recalled, 7 stored",
+    "world_model": "48 case-file events",
+    "markovian": "2 bounded steps (completed), ~0 tokens saved (estimated)"
+  },
+  "cost": {
+    "quote": {
+      "maxRounds": 4,
+      "maxQueries": 24,
+      "maxModelCalls": 40,
+      "maxSeconds": 480,
+      "rationale": "explain-a-change: up to 4 rounds of hypothesis testing"
+    },
+    "spent": {
+      "modelCalls": 8,
+      "queries": 10,
+      "rounds": 2,
+      "estTokens": 23484,
+      "seconds": 406
+    },
+    "escalations": []
+  },
+  "data_sources": {
+    "live": 10
+  },
+  "trace_id": "demo-001",
+  "log_file": "logs/trace-demo-001.jsonl",
+  "execution_time_seconds": 405.9,
+  "contract": {
+    "contractId": "fc25c65f-09f5-4532-94db-6c5ed8349aa4",
+    "intent": {
+      "primary": "analysis.explain_change",
+      "parameters": {
+        "question": "Why did Lagos revenue fall in August 2026?",
+        "intent": "explain_change",
+        "metric": "revenue",
+        "direction": "down",
+        "filters": {
+          "city": "Lagos"
+        },
+        "target_month": "2026-08",
+        "baseline_month": "2026-07",
+        "route": "investigate",
+        "risk": {
+          "level": "low",
+          "reasons": []
+        },
+        "confidence": 1,
+        "notes": []
+      },
+      "confidence": 1,
+      "alternates": []
+    },
+    "risk": {
+      "level": "low",
+      "flags": [],
+      "redactions": []
+    },
+    "toolPlan": [
+      {
+        "capability": "memory.recall",
+        "tool": "hmem.query"
+      },
+      {
+        "capability": "world.case",
+        "tool": "worldmodel.case"
+      },
+      {
+        "capability": "data.sql",
+        "tool": "zetaris.sql"
+      },
+      {
+        "capability": "memory.store",
+        "tool": "hmem.add"
+      }
+    ],
+    "expiresAt": "2026-10-24T17:00:42.255Z",
+    "registryVersion": 3,
+    "lineage": [
+      "b0c2ab1b-7ccd-401f-8e7b-fd9a1a9bf68a",
+      "4051bf02-6838-4a03-b89b-ac2b8be9ba91",
+      "fc25c65f-09f5-4532-94db-6c5ed8349aa4"
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+ "sql": "SELECT sku, SUM(CASE WHEN month = '2026-08' THEN revenue_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END) AS baseline FROM kola.erp_sales WHERE month IN ('2026-07', '2026-08') AND city = 'Lagos' GROUP BY sku ORDER BY SUM(CASE WHEN month = '2026-08' THEN revenue_ngn ELSE 0 END) - SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END)",
+ "columns": [
+  "sku",
+  "target",
+  "baseline"
+ ],
+ "rows": [
+  [
+   "CHIN-250",
+   "7916400.0",
+   "1.31676E7"
+  ],
+  [
+   "PLNT-150",
+   "7275015.0",
+   "7993800.0"
+  ],
+  [
+   "COCO-100",
+   "2523500.0",
+   "2523000.0"
+  ],
+  [
+   "PUFF-6PK",
+   "8115000.0",
+   "8022500.0"
+  ],
+  [
+   "GROU-200",
+   "4155200.0",
+   "3943800.0"
+  ],
+  [
+   "KOKO-500",
+   "6832800.0",
+   "6532200.0"
+  ]
+ ],
+ "recordedAt": "2026-10-24T16:51:48.819Z"
+}

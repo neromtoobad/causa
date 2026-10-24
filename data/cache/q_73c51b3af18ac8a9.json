@@ -1,0 +1,8 @@
+{
+ "sql": "CREATE LIGHTNING REST TABLE warehouse_inventory_src FROM KOLA_SYSTEMS REQUEST(endpoint \"http://host.docker.internal:8000/sources/warehouse_inventory.json\", method \"get\", response_type \"json\", http_encoding \"URLENCODED\") HEADER () BODY ()",
+ "columns": [
+  "Result"
+ ],
+ "rows": [],
+ "recordedAt": "2026-10-24T16:50:01.958Z"
+}

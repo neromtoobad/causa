@@ -1,0 +1,8 @@
+{
+ "sql": "CREATE SCHEMASTORE VIEW logistics WITH CONTAINER kola AS SELECT r.month AS month, r.city AS city, r.carrier AS carrier, CAST(r.deliveries_scheduled AS BIGINT) AS deliveries_scheduled, CAST(r.deliveries_late AS BIGINT) AS deliveries_late, CAST(r.avg_delay_hours AS DOUBLE) AS avg_delay_hours FROM kola_systems.logistics_src LATERAL VIEW explode(records) AS r",
+ "columns": [
+  "Result"
+ ],
+ "rows": [],
+ "recordedAt": "2026-10-24T16:50:05.097Z"
+}

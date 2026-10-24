@@ -1,0 +1,8 @@
+{
+ "sql": "CREATE SCHEMASTORE CONTAINER kola",
+ "columns": [
+  "Result"
+ ],
+ "rows": [],
+ "recordedAt": "2026-10-24T16:49:43.849Z"
+}

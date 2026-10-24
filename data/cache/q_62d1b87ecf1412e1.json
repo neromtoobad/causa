@@ -1,0 +1,13 @@
+{
+ "sql": "SELECT effective_date, sku, city, old_price_ngn, new_price_ngn, reason FROM kola.price_book WHERE effective_date > '2026-05-01' AND effective_date <= '2026-07-31' AND city IN ('Accra', 'ALL') ORDER BY effective_date",
+ "columns": [
+  "effective_date",
+  "sku",
+  "city",
+  "old_price_ngn",
+  "new_price_ngn",
+  "reason"
+ ],
+ "rows": [],
+ "recordedAt": "2026-10-24T17:02:00.310Z"
+}

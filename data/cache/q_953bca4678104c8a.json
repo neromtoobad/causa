@@ -1,0 +1,12 @@
+{
+ "sql": "SELECT COUNT(*) AS n FROM kola.helpdesk",
+ "columns": [
+  "n"
+ ],
+ "rows": [
+  [
+   "420"
+  ]
+ ],
+ "recordedAt": "2026-10-24T16:50:16.949Z"
+}

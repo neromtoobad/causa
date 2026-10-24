@@ -1,0 +1,18 @@
+{
+ "sql": "SELECT month, SUM(revenue_ngn) AS value FROM kola.erp_sales WHERE month IN ('2026-05', '2026-07') AND city = 'Accra' AND channel = 'online' GROUP BY month ORDER BY month",
+ "columns": [
+  "month",
+  "value"
+ ],
+ "rows": [
+  [
+   "2026-05",
+   "1482300.0"
+  ],
+  [
+   "2026-07",
+   "3676400.0"
+  ]
+ ],
+ "recordedAt": "2026-10-24T17:03:01.268Z"
+}

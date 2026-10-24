@@ -1,0 +1,18 @@
+{
+ "sql": "SELECT month, SUM(revenue_ngn) AS value FROM kola.erp_sales WHERE month IN ('2025-07', '2025-08') AND city = 'Lagos' GROUP BY month ORDER BY month",
+ "columns": [
+  "month",
+  "value"
+ ],
+ "rows": [
+  [
+   "2025-07",
+   "3.75985E7"
+  ],
+  [
+   "2025-08",
+   "3.773245E7"
+  ]
+ ],
+ "recordedAt": "2026-10-24T16:54:45.221Z"
+}

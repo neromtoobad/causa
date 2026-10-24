@@ -1,0 +1,26 @@
+{
+ "sql": "SELECT channel, SUM(CASE WHEN month = '2026-07' THEN revenue_ngn ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-05' THEN revenue_ngn ELSE 0 END) AS baseline FROM kola.erp_sales WHERE month IN ('2026-05', '2026-07') AND city = 'Accra' GROUP BY channel ORDER BY channel",
+ "columns": [
+  "channel",
+  "target",
+  "baseline"
+ ],
+ "rows": [
+  [
+   "online",
+   "3676400.0",
+   "1482300.0"
+  ],
+  [
+   "retail",
+   "7039900.0",
+   "6733900.0"
+  ],
+  [
+   "wholesale",
+   "4151600.0",
+   "4001100.0"
+  ]
+ ],
+ "recordedAt": "2026-10-24T17:03:26.426Z"
+}

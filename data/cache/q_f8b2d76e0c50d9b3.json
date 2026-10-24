@@ -1,0 +1,22 @@
+{
+ "sql": "SELECT effective_date, sku, city, old_price_ngn, new_price_ngn, reason FROM kola.price_book WHERE effective_date > '2026-07-01' AND effective_date <= '2026-08-31' AND city IN ('Lagos', 'ALL') ORDER BY effective_date",
+ "columns": [
+  "effective_date",
+  "sku",
+  "city",
+  "old_price_ngn",
+  "new_price_ngn",
+  "reason"
+ ],
+ "rows": [
+  [
+   "2026-08-01",
+   "PLNT-150",
+   "Lagos",
+   "900.0",
+   "1035.0",
+   "Plantain supply shortage, Lagos only"
+  ]
+ ],
+ "recordedAt": "2026-10-24T16:52:09.603Z"
+}

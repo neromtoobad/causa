@@ -1,0 +1,41 @@
+{
+ "sql": "SELECT sku, SUM(CASE WHEN month = '2026-07' THEN stockout_days ELSE 0 END) AS target, SUM(CASE WHEN month = '2026-05' THEN stockout_days ELSE 0 END) AS baseline FROM kola.warehouse_inventory WHERE city = 'Accra' AND month IN ('2026-05', '2026-07') GROUP BY sku ORDER BY sku",
+ "columns": [
+  "sku",
+  "target",
+  "baseline"
+ ],
+ "rows": [
+  [
+   "CHIN-250",
+   "0",
+   "0"
+  ],
+  [
+   "COCO-100",
+   "0",
+   "0"
+  ],
+  [
+   "GROU-200",
+   "1",
+   "0"
+  ],
+  [
+   "KOKO-500",
+   "0",
+   "0"
+  ],
+  [
+   "PLNT-150",
+   "0",
+   "0"
+  ],
+  [
+   "PUFF-6PK",
+   "0",
+   "0"
+  ]
+ ],
+ "recordedAt": "2026-10-24T17:02:00.481Z"
+}

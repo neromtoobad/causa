@@ -1,0 +1,21 @@
+{
+ "sql": "SHOW LIGHTNING DATABASES",
+ "columns": [
+  "name",
+  "description",
+  "id"
+ ],
+ "rows": [
+  [
+   "NY_TAXI",
+   "NY Taxi sample data",
+   "6"
+  ],
+  [
+   "TPCDS_DB",
+   "TPC-DS benchmark sample data",
+   "307"
+  ]
+ ],
+ "recordedAt": "2026-10-24T16:49:31.420Z"
+}

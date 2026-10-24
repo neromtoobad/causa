@@ -1,0 +1,8 @@
+{
+ "sql": "CREATE SCHEMASTORE VIEW ad_platform WITH CONTAINER kola AS SELECT r.month AS month, r.city AS city, r.platform AS platform, CAST(r.spend_ngn AS DOUBLE) AS spend_ngn, CAST(r.impressions AS BIGINT) AS impressions, CAST(r.clicks AS BIGINT) AS clicks FROM kola_systems.ad_platform_src LATERAL VIEW explode(records) AS r",
+ "columns": [
+  "Result"
+ ],
+ "rows": [],
+ "recordedAt": "2026-10-24T16:50:02.899Z"
+}

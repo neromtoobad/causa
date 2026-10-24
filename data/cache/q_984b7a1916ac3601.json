@@ -1,0 +1,8 @@
+{
+ "sql": "CREATE SCHEMASTORE VIEW erp_sales WITH CONTAINER kola AS SELECT r.month AS month, r.city AS city, r.channel AS channel, r.sku AS sku, CAST(r.units AS BIGINT) AS units, CAST(r.unit_price_ngn AS DOUBLE) AS unit_price_ngn, CAST(r.revenue_ngn AS DOUBLE) AS revenue_ngn FROM kola_systems.erp_sales_src LATERAL VIEW explode(records) AS r",
+ "columns": [
+  "Result"
+ ],
+ "rows": [],
+ "recordedAt": "2026-10-24T16:50:01.461Z"
+}

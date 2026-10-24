@@ -108,7 +108,7 @@ export function schemaText(): string {
 // Zetaris DDL, one statement per entry (Zetaris runs one statement per call).
 export function zetarisDdl(sourceBaseUrl: string): string[] {
   const out: string[] = [
-    `CREATE LIGHTNING DATABASE ${LIGHTNING_DB} DESCRIBE BY "Kola Foods internal systems (synthetic demo data served by Causa)"`,
+    `CREATE LIGHTNING DATABASE ${LIGHTNING_DB} DESCRIBE BY "Kola Foods internal systems, synthetic demo data served by Causa"`,
     `CREATE SCHEMASTORE CONTAINER ${CONTAINER}`,
   ];
   for (const t of SOURCES) {

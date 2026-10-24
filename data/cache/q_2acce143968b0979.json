@@ -1,0 +1,8 @@
+{
+ "sql": "CREATE SCHEMASTORE VIEW helpdesk WITH CONTAINER kola AS SELECT r.month AS month, r.city AS city, r.category AS category, CAST(r.tickets AS BIGINT) AS tickets FROM kola_systems.helpdesk_src LATERAL VIEW explode(records) AS r",
+ "columns": [
+  "Result"
+ ],
+ "rows": [],
+ "recordedAt": "2026-10-24T16:50:04.062Z"
+}

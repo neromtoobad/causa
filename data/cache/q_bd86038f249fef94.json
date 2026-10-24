@@ -1,0 +1,12 @@
+{
+ "sql": "SELECT COUNT(*) AS n FROM kola.product_catalog",
+ "columns": [
+  "n"
+ ],
+ "rows": [
+  [
+   "6"
+  ]
+ ],
+ "recordedAt": "2026-10-24T16:50:19.229Z"
+}

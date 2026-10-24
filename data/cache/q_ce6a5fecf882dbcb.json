@@ -1,0 +1,22 @@
+{
+ "sql": "SELECT effective_date, sku, city, old_price_ngn, new_price_ngn, reason FROM kola.price_book WHERE effective_date > '2026-08-01' AND effective_date <= '2026-09-31' AND city IN ('Abuja', 'ALL') ORDER BY effective_date",
+ "columns": [
+  "effective_date",
+  "sku",
+  "city",
+  "old_price_ngn",
+  "new_price_ngn",
+  "reason"
+ ],
+ "rows": [
+  [
+   "2026-09-01",
+   "KOKO-500",
+   "Abuja",
+   "1800.0",
+   "1850.0",
+   "Routine review"
+  ]
+ ],
+ "recordedAt": "2026-10-24T16:59:47.765Z"
+}
