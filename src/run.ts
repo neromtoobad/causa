@@ -211,6 +211,8 @@ export async function runJob(req: RunInput, hooks: { onTrace?: (t: Trace) => voi
 
     // ---------------------------------------------------- brief + memory
     const caveats = ["Kòlá Foods is a fictional company; its systems hold synthetic demo data."];
+    const fromMemory = trace.events.flatMap((e) => (e.agent_name === "Planner" && Array.isArray(e.data?.skippedFromMemory) ? (e.data!.skippedFromMemory as string[]) : []));
+    if (fromMemory.length) caveats.unshift(`Not re-tested because the firm already ruled them out in an earlier case (H-MEM): ${[...new Set(fromMemory.map((x) => x.split(" (")[0].replace(/_/g, " ")))].join(", ")}.`);
     if (cfo.escalations.length) caveats.push(`The CFO stopped further spend (${cfo.escalations.join(", ")}); the brief uses the evidence gathered up to that point.`);
     const brief = await writeBrief(c, premise, hyps, investigator.results, trace, brain, { premiseNote, caveats });
     const stored = archivist.remember(c, hyps);
