@@ -68,7 +68,7 @@ npm test                           # engine conformance smoke tests + Causa feat
 
 Returns `status`, `output.summary`, `output.brief` (headline, the measured change, `causes[]` each with `evidence[]` = `{queryId, sql, source, rows}`, `ruled_out[]`, `unresolved[]`, caveats), `output.recommendations`, `agents`, `contract` (the signed Scout Intent contract and its lineage), `memory`, `engines`, `cost` (the CFO's quote and spend), `trace_id`, `log_file` and `execution_time_seconds`. Failures return a structured `error` instead of crashing.
 
-**UI** — `http://localhost:8000`: ask a question and watch the office. Agent desks light up as they work, the case file fills with hypotheses that turn *confirmed* or *ruled out*, every evidence chip opens the SQL and rows, the CFO ledger tracks the budget, and the trace streams live.
+**UI** — `http://localhost:8000`: every question opens a case file. The personnel ID cards change pose as each agent works, each hypothesis is typed up as an exhibit and rubber-stamped *confirmed* or *ruled out*, every evidence tag opens the SQL and rows, the CFO's cost of the case prints as a till receipt, the answer arrives as a typed memorandum, and the case log streams live.
 
 Other endpoints: `POST /api/jobs` + `GET /api/jobs/:id/events` (live SSE trace), `GET /api/health`, `GET /api/memory` (what the firm remembers).
 
@@ -202,7 +202,7 @@ input_examples/ output_examples/ logs/ test/
 ## Pre-existing components (declared)
 
 - Meterless engine reference implementations (`engines/`), unchanged, Apache-2.0.
-- The visual language (palette, Geist typefaces, panel and pill shapes) follows the author's earlier project, Syncly; Syncly's character sheet and building art were used only as style references for the new Causa art. No code was reused.
+- Syncly's character sheet and building art (the author's earlier project) were used only as style references when generating Causa's art. Causa's own visual identity is a case dossier (manila folders, typed exhibits, rubber stamps, a typed memorandum). No code was reused.
 
 ## Third-party licences
 

@@ -169,7 +169,7 @@ export async function runJob(req: RunInput, hooks: { onTrace?: (t: Trace) => voi
         lineage.push(contract.contractId);
         if (!cfo.approve("rounds", "Planner")) return { content: `Round ${round}: budget exhausted.\n[TASK_COMPLETE]` };
         trace.log({
-          agent_name: "System", action: "round_start", status: "info",
+          agent_name: "System", action: "round_start", status: "info", target_agent: round === 1 || !pendingFollowUps.length ? "Planner" : "Investigator",
           input_summary: `Markovian step ${round}; carryover ${carryover.length} chars`,
           output_summary: `round ${round}: ${carryover ? carryover.replace(/\n/g, " | ").slice(0, 200) : "fresh start"}`,
           data: { engine: "Markovian", step: round, carryover },

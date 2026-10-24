@@ -65,7 +65,8 @@ export class Skeptic {
         final = {
           verdict: agree ? mv.verdict : "inconclusive",
           finding: agree ? mv.finding || rule?.finding || "" : `Model and numbers disagree. Model: ${mv.finding}. Numbers: ${rule!.finding}`,
-          impactShare: rule?.impactShare ?? (typeof mv.impact_share === "number" ? Math.max(0, Math.min(1, mv.impact_share)) : undefined),
+          // Only measured shares count: a model's estimate for a custom hypothesis is not evidence.
+          impactShare: rule?.impactShare,
           confidence: agree ? Math.min(0.95, Math.max(rule?.confidence ?? 0, Number(mv.confidence ?? 0.6))) : 0.4,
         };
         if (!followUp && mv.follow_up && mv.follow_up.trim().length > 8 && final.verdict === "supported") followUp = { reason: mv.follow_up.trim(), request: mv.follow_up.trim() };

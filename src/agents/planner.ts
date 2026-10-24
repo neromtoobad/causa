@@ -47,12 +47,12 @@ export async function plan(c: Contract, premise: Premise, recalled: Recalled[], 
         recalled.length ? `What the firm already knows (H-MEM):\n${recalled.map((m) => `- ${m.content}`).join("\n")}` : "The firm has no prior findings on this.",
         existing.length ? `Already tested this run: ${existing.map((h) => `${h.kind} (${h.status})`).join(", ")}` : "",
         unexplained !== undefined ? `Round ${round}: ${Math.round(unexplained * 100)}% of the change is still unexplained. Propose only NEW hypotheses that could explain the remainder.` : "",
-        `Return {"hypotheses":[{"kind":"...","statement":"...","rationale":"..."}]} with 3 to 6 items.`,
+        `Return {"hypotheses":[{"kind":"...","statement":"...","rationale":"..."}]} with 3 to 6 items. Each statement is ONE plain sentence of at most 18 words.`,
       ].filter(Boolean).join("\n\n")
     );
     if (reply?.hypotheses?.length) {
       proposals = reply.hypotheses
-        .map((h) => ({ kind: (KINDS.includes(h.kind as HypothesisKind) ? h.kind : "custom") as HypothesisKind, statement: String(h.statement ?? "").slice(0, 240), rationale: String(h.rationale ?? "").slice(0, 300) }))
+        .map((h) => ({ kind: (KINDS.includes(h.kind as HypothesisKind) ? h.kind : "custom") as HypothesisKind, statement: clip(String(h.statement ?? ""), 160), rationale: String(h.rationale ?? "").slice(0, 300) }))
         .filter((h) => h.statement);
     }
   }
@@ -86,4 +86,11 @@ export async function plan(c: Contract, premise: Premise, recalled: Recalled[], 
     data: { hypotheses: hyps, skippedFromMemory: reusedNotes },
   });
   return hyps;
+}
+
+// Cut long model text at a word boundary.
+function clip(s: string, n: number): string {
+  const t = s.replace(/\s+/g, " ").trim();
+  if (t.length <= n) return t;
+  return t.slice(0, t.lastIndexOf(" ", n)).replace(/[,;:.\s]+$/, "") + "…";
 }
