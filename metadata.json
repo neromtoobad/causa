@@ -1,0 +1,30 @@
+{
+  "project": "Causa",
+  "tagline": "The analyst firm that tells you why",
+  "track": "The Agent That Can Explain Why",
+  "team": "nerom",
+  "entry_points": {
+    "http": "POST /run  {\"input\":{\"query\":\"...\"}}",
+    "cli": "npx tsx src/cli.ts input_examples/example_1.json",
+    "ui": "http://localhost:8000"
+  },
+  "sponsor_technology": {
+    "zetaris": {
+      "role": "Single SQL access point to the client's six internal systems (ERP, warehouse, ad platform, price book, helpdesk, logistics), each registered as a Lightning REST table with a SchemaStore view; every piece of evidence is a Zetaris query.",
+      "code": ["src/adapters/zetaris.ts", "src/sources.ts", "scripts/zetaris-setup.ts"]
+    },
+    "meterless": {
+      "engines": {
+        "scout_intent": { "role": "Intake: Sense, Interpret, Guard, Route, Recommend; HMAC-signed execution contract verified before every tool call, refreshed per round", "code": ["src/agents/intake.ts"] },
+        "hmem": { "role": "Firm memory: findings stored with provenance (query ids); recalled by the Planner so later cases skip what is already ruled out", "code": ["src/agents/archivist.ts", "engines/hmem"] },
+        "world_model": { "role": "Shared case file the agents read and write concurrently; event log drives the office view", "code": ["src/agents/archivist.ts", "engines/world-model"] },
+        "markovian": { "role": "Investigation rounds as bounded steps; the hypothesis ledger is the carryover", "code": ["src/run.ts", "engines/markovian"] }
+      },
+      "runtime": { "role": "Nightshift is the primary AI provider (Meterless Runtime 0.90.0 contract)", "code": ["src/adapters/meterless.ts", "src/brain.ts"] },
+      "tests": "npm test (engine conformance smoke tests + Causa feature tests)"
+    },
+    "nvidia": { "role": "Nemotron models serve the fast and deep lanes through Nightshift: intake binding, planning, SQL authoring and repair, critique, and the brief", "code": ["src/brain.ts"] },
+    "coding_tool": "Claude Code (Cursor became optional on Oct 22)"
+  },
+  "data": { "kind": "synthetic", "generator": "scripts/gen-data.ts", "note": "Kòlá Foods is fictional" }
+}

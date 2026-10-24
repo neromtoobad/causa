@@ -1,0 +1,5 @@
+{
+  "run_id": "demo-001",
+  "input": { "query": "Why did Lagos revenue fall in August 2026?" },
+  "options": { "sample_mode": false }
+}

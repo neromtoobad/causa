@@ -1,0 +1,38 @@
+{
+  "name": "causa",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Causa: an AI analyst firm you hire to answer \"why\". Agents investigate across Zetaris-federated data, argue over the evidence, and return a brief where every claim cites its SQL and rows.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "dev": "tsx watch src/server.ts",
+    "run": "tsx src/cli.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "web:dev": "vite --config web/vite.config.ts",
+    "web:build": "vite build --config web/vite.config.ts",
+    "build": "npm run web:build"
+  },
+  "dependencies": {
+    "@duckdb/node-api": "^1.4.1-r.1",
+    "@hono/node-server": "^1.13.7",
+    "hono": "^4.6.14"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
