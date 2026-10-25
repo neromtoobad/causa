@@ -206,4 +206,4 @@ input_examples/ output_examples/ logs/ test/
 
 ## Third-party licences
 
-Hono (MIT) · @hono/node-server (MIT) · DuckDB node API (MIT) · React (MIT) · Vite (MIT) · Meterless engines (Apache-2.0) · Instrument Serif, Inter, JetBrains Mono (SIL OFL).
+Hono (MIT) · @hono/node-server (MIT) · DuckDB node API (MIT) · React (MIT) · Vite (MIT) · Meterless engines (Apache-2.0) · Fraunces, Courier Prime, Special Elite (SIL OFL).

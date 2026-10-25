@@ -66,7 +66,7 @@ export class MeterlessProvider {
 
   async status(): Promise<{ status: ProviderStatus; models: string[]; detail?: string }> {
     try {
-      const res = await fetch(`${this.baseUrl}/models`, { headers: this.headers(), signal: AbortSignal.timeout(8000) });
+      const res = await fetch(`${this.baseUrl}/models`, { headers: this.headers(), signal: AbortSignal.timeout(20000) });
       if (res.status === 401 || res.status === 403) return { status: "unauthorized", models: [] };
       if (res.status !== 200) return { status: "offline", models: [], detail: `HTTP ${res.status}` };
       const body = (await res.json()) as { data?: { id: string }[] };

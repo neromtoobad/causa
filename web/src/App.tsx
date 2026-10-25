@@ -392,13 +392,20 @@ export default function App() {
             <pre>{drawer.sql}</pre>
             <table className="rows">
               <thead><tr>{drawer.columns.map((c) => <th key={c}>{c}</th>)}</tr></thead>
-              <tbody>{drawer.rows.map((r, i) => <tr key={i}>{r.map((x, j) => <td key={j}>{typeof x === "number" ? (Number.isInteger(x) ? x.toLocaleString() : x.toFixed(2)) : String(x)}</td>)}</tr>)}</tbody>
+              <tbody>{drawer.rows.map((r, i) => <tr key={i}>{r.map((x, j) => <td key={j}>{cell(x)}</td>)}</tr>)}</tbody>
             </table>
           </div>
         </div>
       )}
     </>
   );
+}
+
+// Zetaris returns numbers as strings ("2.1084E7"); show them as numbers.
+function cell(x: unknown): string {
+  const n = typeof x === "number" ? x : typeof x === "string" && /^-?\d+(\.\d+)?(e[-+]?\d+)?$/i.test(x.trim()) ? Number(x) : null;
+  if (n === null || !Number.isFinite(n)) return String(x);
+  return Number.isInteger(n) ? n.toLocaleString("en-GB") : n.toLocaleString("en-GB", { maximumFractionDigits: 2 });
 }
 
 function Archive({ memory }: { memory: any[] }) {
